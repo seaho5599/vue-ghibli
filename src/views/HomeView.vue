@@ -1,4 +1,7 @@
 <template>
+<div class="logo">
+  <img class="logo-img" :src="('./images/logo.svg')" alt="">
+</div>
 <div class="movie" v-for="(item, index) in movieList" :key="index">
 <MovieList :propsdata ="item"/>
 </div>
@@ -24,6 +27,18 @@ export default {
 </script>
 
 <style scoped>
+.logo{
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 50px 0;
+  
+}
+.logo-img{
+  position: relative;
+  display: block;
+  margin: 0 auto;
+}
 .movie{
   position: relative;
   display: block;
