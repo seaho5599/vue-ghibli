@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="movie-box" :style="{
     backgroundImage: `url(${movieInfo.movie_banner})`,
     backgroundSize:'cover',
@@ -23,11 +24,15 @@
 
     </div>
   </div>
+  <Transition name="fade">
+  <div class="detail-intro" v-if="show"></div>
+  </Transition>
+  </div>
 </template>
 
 <script>
   import {
-    computed
+    computed,onMounted,onUpdated,ref
   } from 'vue';
   // router 를 통해서 전송받은 데이터 활용
   import {
@@ -43,29 +48,49 @@
     setup() {
       const route = useRoute();
       const id = route.params.id
-
       const store = useStore();
       store.dispatch('fetchMovieInfo', id)
       const movieInfo = computed(() => store.getters.getMoiveInfo)
       const router = useRouter()
       const back = () => {
-        router.push('/')
+        router.push('/page-ghibli/')
       }
+      const show = ref(true)
+      onMounted(() =>{
+        window.scrollTo(0, 0)
+        document.querySelector('html').style.overflowY = 'hidden'
+      })
+      onUpdated(() =>{
+        show.value = false
+        document.querySelector('html').style.overflowY = "auto"
+      })
       return {
         id,
         movieInfo,
-        back
+        back,
+        show,
+        
       }
     }
   }
 </script>
 
 <style scoped>
+  .detail-intro{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    background: url('@/assets/detail-intro.jpg') no-repeat center;
+    background-size: cover;
+  }
   .movie-box {
     position: relative;
     display: block;
     width: 100%;
-    
+
   }
 
   .a-back {
@@ -158,7 +183,15 @@
     margin-bottom: 20px;
 
   }
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s ease;
+  }
 
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
   @media screen and (max-width:1000px) {
     .movie-imge {
       width: 95%;

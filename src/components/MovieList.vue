@@ -19,7 +19,7 @@
     setup(props) {
       const router = useRouter()
       const detailMove = () => {
-        router.push('/detail/' + props.propsdata.id);
+        router.push('/page-ghibli/detail/' + props.propsdata.id);
       }
       return {
         detailMove
