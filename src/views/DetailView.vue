@@ -45,7 +45,7 @@
 
 
   export default {
-    setup() {
+    setup(props, context) {
       const route = useRoute();
       const id = route.params.id
       const store = useStore();
@@ -63,6 +63,7 @@
       onUpdated(() =>{
         show.value = false
         document.querySelector('html').style.overflowY = "auto"
+        context.emit('hide')
       })
       return {
         id,
@@ -94,18 +95,34 @@
   }
 
   .a-back {
-    position: relative;
+    position: absolute;
+    top: 50px;
+    right: 70px;
     display: block;
-    float: right;
-    margin-right: 20px;
-    margin-top: 10px;
-    padding: 5px;
-    background: skyblue;
-    text-transform: uppercase;
-    font-size: 15px;
+    width: 70px;
+    height: 70px;
+    background: url('@/assets/kuro02.svg') no-repeat center;
+    background-size: cover;
     cursor: pointer;
-    border-radius: 5px;
+    z-index: 9;
+    font-size: 0;
   }
+  .a-back:hover{
+    animation-name: tossing;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+  }
+@keyframes tossing {
+	0% {
+		transform: rotate(-4deg);	
+	}
+	50% {
+		transform: rotate(4deg);
+	}
+	100% {
+		transform: rotate(-4deg);	
+	}						
+}
 
   .movie-detail {
     position: relative;
