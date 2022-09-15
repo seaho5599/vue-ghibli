@@ -5,7 +5,11 @@
     backgroundSize:'cover',
     backgroundPosition:'center'
   }">
-    <a class="a-back" @click.stop="back">all list</a>
+
+    <a class="a-back" @click.stop="back">
+      <div class="a-back-box"><span>BACK</span></div>
+      <div class="a-back-img"></div>
+    </a>
     <div class="movie-detail">
       <img class="movie-imge" :src="movieInfo.image" alt="">
       <div class="movie-info-wrap">
@@ -99,14 +103,49 @@
     top: 50px;
     right: 70px;
     display: block;
+    z-index: 9;
+    font-size: 0;
+  }
+  .a-back-box{
+    display: inline-block;
+    position: relative;
+    background: #444;
+    height: 50px;
+    width: 120px;
+    margin: 0 auto 10px;
+    border-radius: 50px;
+  }
+  .a-back-box::after{
+    content: '';
+    position: absolute;
+    border-top: 10px solid #444;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    bottom: -9px;
+    left: 20px;
+  }
+  .a-back-box span{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 120px;
+    height: 50px;
+    z-index: 99;
+    font-size: 16px;
+    text-align: center;
+    line-height: 50px;
+    color: #ccc;
+    font-weight: 700;
+  }
+  .a-back-img{
     width: 70px;
     height: 70px;
     background: url('@/assets/kuro02.svg') no-repeat center;
     background-size: cover;
     cursor: pointer;
-    z-index: 9;
-    font-size: 0;
   }
+
   .a-back:hover{
     animation-name: tossing;
     animation-duration: 2.5s;
