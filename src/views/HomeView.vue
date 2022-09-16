@@ -3,13 +3,32 @@
   <div class="logo">
     <img class="logo-img" :src="('./images/logo.svg')" alt="">
   </div>
-  <div class="movie" v-for="(item, index) in movieList" :key="index">
-    <MovieList :propsdata="item" />
-  </div>
+  <Swiper 
+  :modules="modules"
+  :effect="'coverflow'"
+    :grabCursor="true"
+    :centeredSlides="true"
+    :slidesPerView="'auto'"
+    :coverflowEffect="{
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: true,
+    }"
+  :mousewheel="true" 
+    >
+    <swiper-slide class="movie" v-for="(item, index) in movieList" :key="index">
+      <!-- <div class="movie" v-for="(item, index) in movieList" :key="index"> -->
+        <MovieList :propsdata="item" />
+      <!-- </div> -->
+    </swiper-slide>
+  </Swiper>
+
   <button class="gotop" ref="gotop" @click="moveTop">
     <span class="gotop-btn">
     </span>
-    </button>
+  </button>
 </template>
 
 <script>
@@ -22,11 +41,22 @@
   import {
     useStore
   } from 'vuex';
+  import {
+    Mousewheel,EffectCoverflow
+  } from 'swiper';
+  import {
+    Swiper,
+    SwiperSlide
+  } from 'swiper/vue';
+  import 'swiper/css';
+  import "swiper/css/effect-coverflow";
   import MovieList from '../components/MovieList.vue';
 
   export default {
     components: {
-      MovieList
+      MovieList,
+      Swiper,
+      SwiperSlide
     },
     setup(props, context) {
       const store = useStore();
@@ -58,7 +88,8 @@
       return {
         movieList,
         gotop,
-        moveTop
+        moveTop,
+        modules: [Mousewheel,EffectCoverflow]
       }
     }
   }
@@ -82,9 +113,11 @@
   .movie {
     position: relative;
     display: block;
-    width: 49%;
-    background: #fff;
+    width: 30%;
+    height: 90%;
+    background:#bbb;;
     margin-bottom: 70px;
+    margin-top: 35px;
     border-radius: 5px;
     color: #adaeb9;
     padding: 20px;
@@ -107,7 +140,8 @@
     border: 0;
     border-radius: 10px;
   }
-  .gotop-btn{
+
+  .gotop-btn {
     display: block;
     width: 25px;
     height: 40px;
@@ -116,6 +150,7 @@
     background-size: cover;
     /* font-size: 48px; */
   }
+
   @media screen and (max-width: 1000px) {
     .logo-img {
       width: 80%;

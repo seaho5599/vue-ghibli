@@ -119,6 +119,7 @@ html {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    background: darkslategray;
   }
 
   .intro {
